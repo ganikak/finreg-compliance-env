@@ -1,0 +1,72 @@
+name: Docker Build & Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t finreg-compliance-env .
+
+      - name: Start container
+        run: |
+          docker run -d \
+            --name finreg-test \
+            -p 8000:8000 \
+            -e FINREG_TASK=easy_structuring \
+            finreg-compliance-env
+          sleep 10
+
+      - name: Health check
+        run: |
+          curl -f http://localhost:8000/health
+          echo "Health check passed"
+
+      - name: Test reset endpoint
+        run: |
+          curl -f -X POST http://localhost:8000/reset \
+            -H "Content-Type: application/json"
+          echo "Reset endpoint working"
+
+      - name: Test step endpoint
+        run: |
+          curl -f -X POST http://localhost:8000/step \
+            -H "Content-Type: application/json" \
+            -d '{
+              "decision": "flag_aml",
+              "reasoning": "Structuring pattern detected below CTR threshold",
+              "identified_risks": ["structuring", "smurfing"],
+              "regulation_cited": ["BSA", "FATF"]
+            }'
+          echo "Step endpoint working"
+
+      - name: Test state endpoint
+        run: |
+          curl -f http://localhost:8000/state
+          echo "State endpoint working"
+
+      - name: Cleanup
+        run: docker stop finreg-test && docker rm finreg-test
+
+  python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: python test_env.py

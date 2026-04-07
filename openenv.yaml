@@ -1,0 +1,53 @@
+spec_version: 1
+name: finreg-compliance-env
+version: 1.0.0
+description: >
+  AI Regulatory Compliance Simulator for Financial Transactions.
+  An agent reviews financial transactions, interprets regulatory alerts
+  (BSA, FATF, OFAC, MiFID2, GDPR, PCI DSS), and makes compliance decisions
+  (approve / reject / escalate / flag_aml / flag_fraud / flag_sanctions).
+  Three tasks of increasing difficulty simulate real-world AML, sanctions,
+  and multi-framework compliance scenarios.
+author: FinReg OpenEnv Team
+tags:
+  - openenv
+  - compliance
+  - finance
+  - aml
+  - sanctions
+  - reinforcement-learning
+  - real-world
+type: http
+runtime: docker
+app: server.app:app
+port: 8000
+tasks:
+  - name: easy_structuring
+    difficulty: easy
+    description: >
+      Detect a classic BSA structuring (smurfing) pattern — multiple wire
+      transfers just below the $10,000 CTR threshold to a Cayman Islands
+      shell company.
+  - name: medium_pep_sanctions
+    difficulty: medium
+    description: >
+      Handle a $250K SWIFT transfer from a Russian PEP subject to OFAC
+      sectoral sanctions. Apply Enhanced Due Diligence and flag appropriately.
+  - name: hard_crypto_layering
+    difficulty: hard
+    description: >
+      Multi-framework scenario: crypto layering (FATF R15), wash trading
+      (MiFID2 MAR), GDPR personal-data leakage, and PCI DSS gaps in a
+      single high-velocity crypto-to-fiat transaction stream.
+action_space:
+  type: structured
+  description: >
+    ComplianceAction with decision (enum), reasoning (text),
+    identified_risks (list), regulation_cited (list), optional info_request.
+observation_space:
+  type: structured
+  description: >
+    ComplianceObservation with transaction details, regulatory alerts,
+    task context, reward, done flag, and feedback.
+reward_range: [-0.5, 1.0]
+max_episode_steps: 8

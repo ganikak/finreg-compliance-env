@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "finreg-compliance-env"
+version = "1.0.0"
+description = "AI Regulatory Compliance Simulator for Financial Transactions — OpenEnv environment"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["openenv", "compliance", "finance", "aml", "reinforcement-learning"]
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.6",
+    "pydantic>=2.9.0",
+    "httpx>=0.27.0",
+    "openai>=1.40.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "httpx>=0.27.0"]
+ui  = ["gradio>=4.0"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["finreg_compliance_env*"]
