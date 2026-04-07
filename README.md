@@ -1,23 +1,6 @@
----
-title: FinReg Compliance Env
-emoji: 🏦
-colorFrom: blue
-colorTo: green
-sdk: docker
-pinned: false
-tags:
-  - openenv
-  - compliance
-  - finance
-  - aml
-  - reinforcement-learning
----
-
 # 🏦 AI Regulatory Compliance Simulator for Financial Transactions
 
 **FinReg Compliance Env** is an [OpenEnv](https://github.com/meta-pytorch/OpenEnv)-compatible reinforcement learning environment where an AI agent acts as a **financial compliance officer**, reviewing suspicious financial transactions and making regulatory decisions across multiple international frameworks.
-
-> Built for the **Meta PyTorch Hackathon by Scaler — OpenEnv Round 1 Bootcamp**
 
 ---
 
@@ -98,24 +81,6 @@ A German crypto-to-fiat firm sends $47K to a Luxembourg asset manager — but ve
 - **Correct Decision**: `escalate`
 - **Key Regulations**: MiFID2, FATF, GDPR
 - **Target Score**: 0.50+
-
----
-
-## 🏆 Reward Function
-
-The reward function provides **rich partial-progress signals**:
-
-| Component | Weight | Description |
-|---|---|---|
-| Decision correctness | 30–40% | Exact match vs correct decision |
-| Risk identification | 30–35% | Keyword overlap with expected risk factors |
-| Regulation citation | 15–20% | Correctly cited regulatory frameworks |
-| Reasoning quality | 15% | Domain keyword presence in reasoning |
-| Step penalty | -0.02/step | Encourages efficient decisions |
-| Approve-a-violation penalty | -0.30 | Severe penalty for approving flagged transactions |
-| Uninformed reject penalty | -0.10 | Process error without regulatory backing |
-
-**Reward range**: `[-0.5, 1.0]`
 
 ---
 
@@ -247,4 +212,4 @@ openenv validate
 
 ---
 
-*Built with ❤️ for the Meta PyTorch Hackathon by Scaler — OpenEnv Round 1 Bootcamp*
+*Built for the Meta PyTorch Hackathon by Scaler — OpenEnv Round 1 Bootcamp*
