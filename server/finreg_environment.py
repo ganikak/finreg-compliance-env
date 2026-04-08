@@ -5,8 +5,15 @@ Implements OpenEnv's Environment interface: reset(), step(), state property.
 
 from __future__ import annotations
 
+import os
+import sys
 import uuid
 from typing import Any, Dict, Optional
+
+# Guarantee project root is importable regardless of working directory
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
 
 from models import (
     ComplianceAction,

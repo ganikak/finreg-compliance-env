@@ -5,11 +5,11 @@ services:
     build: .
     container_name: finreg_easy
     ports:
-      - "8000:8000"
+      - "7860:7860"
     environment:
       - FINREG_TASK=easy_structuring
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:7860/health"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -18,11 +18,11 @@ services:
     build: .
     container_name: finreg_medium
     ports:
-      - "8001:8000"
+      - "7861:7860"
     environment:
       - FINREG_TASK=medium_pep_sanctions
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:7860/health"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -31,11 +31,11 @@ services:
     build: .
     container_name: finreg_hard
     ports:
-      - "8002:8000"
+      - "7862:7860"
     environment:
       - FINREG_TASK=hard_crypto_layering
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:7860/health"]
       interval: 10s
       timeout: 5s
       retries: 5

@@ -93,30 +93,32 @@ A German crypto-to-fiat firm sends $47K to a Luxembourg asset manager — but ve
 git clone https://github.com/YOUR_USERNAME/finreg-compliance-env
 cd finreg-compliance-env
 
-# Build and run
+# Build and run (port 7860 — matches HuggingFace Spaces requirement)
 docker build -t finreg-compliance-env .
-docker run -p 8000:8000 -e FINREG_TASK=easy_structuring finreg-compliance-env
+docker run -p 7860:7860 -e FINREG_TASK=easy_structuring finreg-compliance-env
 ```
+
+> ⚠️ **HuggingFace Spaces requires port 7860.** The Dockerfile is already configured for this.
 
 ### Option 2: Local Python
 
 ```bash
 pip install -r requirements.txt
 cd finreg_compliance_env
-uvicorn server.app:app --port 8000
+uvicorn server.app:app --port 7860
 ```
 
 ### API Endpoints
 
 ```bash
 # Health check
-curl http://localhost:8000/health
+curl http://localhost:7860/health
 
 # Reset episode
-curl -X POST http://localhost:8000/reset
+curl -X POST http://localhost:7860/reset
 
 # Step with compliance action
-curl -X POST http://localhost:8000/step \
+curl -X POST http://localhost:7860/step \
   -H "Content-Type: application/json" \
   -d '{
     "decision": "flag_aml",
@@ -126,7 +128,7 @@ curl -X POST http://localhost:8000/step \
   }'
 
 # Get current state
-curl http://localhost:8000/state
+curl http://localhost:7860/state
 ```
 
 ---

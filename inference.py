@@ -36,7 +36,7 @@ from openai import OpenAI
 API_BASE_URL: str = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
 MODEL_NAME: str = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
 API_KEY: str = os.getenv("HF_TOKEN") or os.getenv("API_KEY") or "hf_placeholder"
-ENV_BASE_URL: str = os.getenv("FINREG_ENV_URL", "http://localhost:8000")
+ENV_BASE_URL: str = os.getenv("FINREG_ENV_URL", "http://localhost:7860")
 
 BENCHMARK = "finreg-compliance-env"
 MAX_STEPS = 5

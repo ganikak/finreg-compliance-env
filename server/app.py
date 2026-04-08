@@ -1,6 +1,8 @@
 """
 FastAPI server for FinReg Compliance Environment.
 Exposes /reset, /step, /state, /health, /metadata endpoints.
+
+NOTE: Runs on port 7860 to satisfy HuggingFace Spaces requirements.
 """
 
 from __future__ import annotations
@@ -8,13 +10,17 @@ from __future__ import annotations
 import os
 import sys
 
-# Make sure parent directory (containing models.py, tasks.py) is on path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Ensure /app (project root) is always on the path regardless of how
+# uvicorn is invoked (docker, local, HF Spaces).
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
 
 from typing import Any, Dict
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from models import ComplianceAction, ComplianceObservation, ComplianceState
 from server.finreg_environment import FinRegEnvironment
@@ -47,6 +53,12 @@ _env = FinRegEnvironment(task_name=TASK_NAME)
 # ---------------------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------------------
+
+@app.get("/")
+async def root() -> Dict[str, str]:
+    """Root route — required by HuggingFace Spaces health check."""
+    return {"status": "ok", "env": "finreg-compliance-env", "task": TASK_NAME, "version": "1.0.0"}
+
 
 @app.get("/health")
 async def health() -> Dict[str, str]:
@@ -159,4 +171,5 @@ if ENABLE_WEB:
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", "7860"))
+    uvicorn.run(app, host="0.0.0.0", port=port)
