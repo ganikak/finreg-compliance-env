@@ -145,17 +145,6 @@ export FINREG_ENV_URL=http://localhost:8000
 # Run inference against all 3 tasks
 python inference.py
 ```
-
-### Expected Baseline Scores (Qwen2.5-72B)
-
-| Task | Expected Score | Difficulty |
-|---|---|---|
-| easy_structuring | 0.65–0.85 | Easy |
-| medium_pep_sanctions | 0.45–0.70 | Medium |
-| hard_crypto_layering | 0.25–0.55 | Hard |
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -172,22 +161,6 @@ finreg-compliance-env/
     ├── finreg_environment.py  # Core environment logic
     └── requirements.txt   # Server dependencies
 ```
-
----
-
-## 🔬 OpenEnv Compliance
-
-- ✅ `step(action)` → returns `ComplianceObservation` with reward, done, info
-- ✅ `reset()` → returns clean initial `ComplianceObservation`
-- ✅ `state` property → returns `ComplianceState`
-- ✅ `openenv.yaml` with `spec_version: 1`
-- ✅ Pydantic typed models for Action, Observation, State
-- ✅ 3 tasks with graders scoring 0.0–1.0
-- ✅ Partial reward signals (not sparse binary)
-- ✅ Dockerfile builds + runs cleanly
-- ✅ Baseline inference script (`inference.py`)
-
----
 
 ## 📊 Baseline Validation
 
