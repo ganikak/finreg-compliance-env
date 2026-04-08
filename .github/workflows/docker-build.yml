@@ -19,25 +19,25 @@ jobs:
         run: |
           docker run -d \
             --name finreg-test \
-            -p 8000:8000 \
+            -p 7860:7860 \
             -e FINREG_TASK=easy_structuring \
             finreg-compliance-env
           sleep 10
 
       - name: Health check
         run: |
-          curl -f http://localhost:8000/health
+          curl -f http://localhost:7860/health
           echo "Health check passed"
 
       - name: Test reset endpoint
         run: |
-          curl -f -X POST http://localhost:8000/reset \
+          curl -f -X POST http://localhost:7860/reset \
             -H "Content-Type: application/json"
           echo "Reset endpoint working"
 
       - name: Test step endpoint
         run: |
-          curl -f -X POST http://localhost:8000/step \
+          curl -f -X POST http://localhost:7860/step \
             -H "Content-Type: application/json" \
             -d '{
               "decision": "flag_aml",
@@ -49,7 +49,7 @@ jobs:
 
       - name: Test state endpoint
         run: |
-          curl -f http://localhost:8000/state
+          curl -f http://localhost:7860/state
           echo "State endpoint working"
 
       - name: Cleanup
