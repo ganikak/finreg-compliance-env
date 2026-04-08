@@ -1,18 +1,3 @@
----
-title: FinReg Compliance Env
-emoji: 🏦
-colorFrom: blue
-colorTo: green
-sdk: docker
-pinned: false
-tags:
-  - openenv
-  - compliance
-  - finance
-  - aml
-  - reinforcement-learning
----
-
 # 🏦 AI Regulatory Compliance Simulator for Financial Transactions
 
 **FinReg Compliance Env** is an [OpenEnv](https://github.com/meta-pytorch/OpenEnv)-compatible reinforcement learning environment where an AI agent acts as a **financial compliance officer**, reviewing suspicious financial transactions and making regulatory decisions across multiple international frameworks.
